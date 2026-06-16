@@ -35,7 +35,7 @@
   >
 </picture>
 
-[![GitHub Release](https://img.shields.io/github/v/release/HYB1022/opti_stopping_test?include_prereleases&cacheSeconds=300)](https://github.com/HYB1022/opti_stopping_test/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/HYB1022/opti_stopping_test?include_prereleases)](https://github.com/HYB1022/opti_stopping_test/releases)
 [<img src="https://img.shields.io/badge/프로젝트 기간-2026.6.9~2026.6.16-fab2ac?style=flat&logo=&logoColor=white" />]()
 
 </div> 
