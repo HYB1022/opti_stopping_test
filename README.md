@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- logo -->
-<img src="https://user-images.githubusercontent.com/80824750/208554558-490845c9-959a-4823-9003-350ec4d221bf.png" width="400"/>
+<img src="https://raw.githubusercontent.com/HYB1022/opti_stopping_test/refs/heads/main/title.png" width="400"/>
 
 ### 최적 정지 이론 모의 실험
 
