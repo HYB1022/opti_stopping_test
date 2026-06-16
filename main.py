@@ -1,11 +1,52 @@
-import random
-import math
+import csv
 
-N = 100
+from simulation import simulate
 
-candidates = list(range(1, N + 1))
-random.shuffle(candidates)
+RATIOS = [
+    0.10,
+    0.20,
+    0.30,
+    0.37,
+    0.40,
+    0.50,
+    0.60,
+    0.70,
+]
 
-observe_count = int(N / math.e)
+TRIALS = 10000
 
-print(f"관찰 인원: {observe_count}")
+results = []
+
+print("실험 시작...\n")
+
+for ratio in RATIOS:
+    success_rate = simulate(
+        n=100,
+        ratio=ratio,
+        trials=TRIALS
+    )
+
+    results.append(
+        [ratio, success_rate]
+    )
+
+    print(
+        f"{ratio:.2f} → "
+        f"{success_rate:.4f}"
+    )
+
+with open(
+    "results.csv",
+    "w",
+    newline="",
+    encoding="utf-8-sig"
+) as f:
+    writer = csv.writer(f)
+
+    writer.writerow(
+        ["ratio", "success_rate"]
+    )
+
+    writer.writerows(results)
+
+print("\nresults.csv 저장 완료")
