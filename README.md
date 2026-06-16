@@ -1,7 +1,21 @@
 <div align="center">
 
 <!-- logo -->
-<img src="https://raw.githubusercontent.com/HYB1022/opti_stopping_test/refs/heads/main/title.png" width="600"/>
+<picture>
+  <source
+    media="(prefers-color-scheme: dark)"
+    srcset="https://raw.githubusercontent.com/HYB1022/opti_stopping_test/main/title_dark.png"
+  >
+  <source
+    media="(prefers-color-scheme: light)"
+    srcset="https://raw.githubusercontent.com/HYB1022/opti_stopping_test/main/title_light.png"
+  >
+  <img
+    src="https://raw.githubusercontent.com/HYB1022/opti_stopping_test/main/title_light.png"
+    width="600"
+    alt="최적 정지 이론 모의 실험"
+  >
+</picture>
 
 ### 최적 정지 이론 모의 실험
 
