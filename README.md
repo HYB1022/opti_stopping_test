@@ -22,7 +22,8 @@
 1. https://www.python.org/downloads/에서 Python 설치 관리자를 다운로드한 후, 실행하여 Python을 설치합니다.
 2. Win -> CMD를 검색하여 실행한 후, 다음 명령어를 입력합니다.
 
+```cmd
 pip install matplotlib
-
 pip install pandas
+```
 3. 릴리즈 탭에 있는 Source code를 저장한 후, main.py를 실행하면 됩니다.
