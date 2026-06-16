@@ -110,8 +110,8 @@ for ratio in RATIOS:
     )
 
     print(
-        f"관찰 비율 {ratio:.2f} "
-        f"→ 성공률 {success_rate:.4f}"
+    f"관찰 비율 {ratio*100:.0f}% "
+    f"→ 성공률 {success_rate*100:.2f}%"
     )
 
 
@@ -150,16 +150,18 @@ df = pd.DataFrame(
     ]
 )
 
+df["ratio_percent"] = df["ratio"] * 100
+
 plt.figure(figsize=(10, 6))
 
 plt.plot(
-    df["ratio"],
-    df["success_rate"],
+    df["ratio_percent"],
+    df["success_rate"] * 100,
     marker="o"
 )
 
-plt.xlabel("관찰 비율")
-plt.ylabel("성공률")
+plt.xlabel("관찰 비율 (%)")
+plt.ylabel("성공률 (%)")
 plt.title("최적 정지 이론(37% 법칙) 시뮬레이션")
 
 plt.grid(True)
@@ -170,9 +172,9 @@ best_ratio = df.loc[max_idx, "ratio"]
 best_success = df.loc[max_idx, "success_rate"]
 
 plt.annotate(
-    f"최적 비율\n({best_ratio:.2f}, {best_success:.3f})",
-    xy=(best_ratio, best_success),
-    xytext=(best_ratio + 0, best_success - 0.03),
+    f"최적 비율\n({best_ratio*100:.0f}%, {best_success*100:.2f}%)",
+    xy=(best_ratio*100, best_success*100),
+    xytext=(best_ratio*100 + 0, best_success*100 - 3),
 )
 
 plt.tight_layout()
