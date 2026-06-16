@@ -7,7 +7,7 @@
 
 <img src="https://raw.githubusercontent.com/HYB1022/opti_stopping_test/refs/heads/main/help.png" width="400"/>
 
-[![Release](https://img.shields.io/badge/release-v0.0.1--alpha-blue?style=flat)](https://github.com/HYB1022/opti_stopping_test/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/HYB1022/opti_stopping_test?include_prereleases)](https://github.com/HYB1022/opti_stopping_test/releases)
 [<img src="https://img.shields.io/badge/프로젝트 기간-2026.6.9~2026.6.16-fab2ac?style=flat&logo=&logoColor=white" />]()
 
 </div> 
