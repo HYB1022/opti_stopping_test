@@ -5,6 +5,7 @@
 
 ### 최적 정지 이론 모의 실험
 
+[<img src="https://img.shields.io/badge/release-v0.0.0-ㅎㄱㄷ두?style=flat&logo=google-chrome&logoColor=white" />]()
 [<img src="https://img.shields.io/badge/프로젝트 기간-2026.6.9~2026.6.16-fab2ac?style=flat&logo=&logoColor=white" />]()
 
 </div> 
