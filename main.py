@@ -83,7 +83,10 @@ RATIOS = [
     0.40,
     0.50,
     0.60,
-    0.70
+    0.70,
+    0.80,
+    0.90,
+    1
 ]
 
 TRIALS = 10000
@@ -167,15 +170,16 @@ best_ratio = df.loc[max_idx, "ratio"]
 best_success = df.loc[max_idx, "success_rate"]
 
 plt.annotate(
-    f"최대 성공률\n{best_success:.3f}",
-    (best_ratio, best_success)
+    f"최적 비율\n({best_ratio:.2f}, {best_success:.3f})",
+    xy=(best_ratio, best_success),
+    xytext=(best_ratio + 0, best_success - 0.03),
 )
 
 plt.tight_layout()
 
 plt.savefig(
     "optimal_stopping_graph.png",
-    dpi=300
+    dpi=600
 )
 
 plt.show()
