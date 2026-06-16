@@ -19,7 +19,7 @@
 2. 시뮬레이션 결과를 그래프로 시각화
 3. 최적 정지 이론의 이론값과 실험값 비교
 ## ❓ How to?
-1. (https://www.python.org/downloads/)에서 Python 설치 관리자를 다운로드한 후, 실행하여 Python을 설치합니다.
+1. https://www.python.org/downloads/ 에서 Python 설치 관리자를 다운로드한 후, 실행하여 Python을 설치합니다.
 2. Win -> CMD를 검색하여 실행한 후, 다음 명령어를 입력합니다.
 
 ```cmd
