@@ -14,6 +14,7 @@
 
 ## 📝 소개
 진로 독서 활동 기록지용 리포지토리입니다.
+
 <img src="https://raw.githubusercontent.com/HYB1022/opti_stopping_test/refs/heads/main/optimal_stopping_graph.png" width="500"/>
 ## 🧰 기능
 1. 관찰 비율(1~99%)에 따른 최적 성공 확률 계산
