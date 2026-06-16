@@ -75,9 +75,9 @@ def simulate(
 # 실험 설정
 # ======================
 
-RATIOS = [i / 100 for i in range(5, 100, 5)]
+RATIOS = [i / 100 for i in range(1, 100)]
 
-TRIALS = 10000
+TRIALS = 1000
 
 results = []
 
@@ -162,7 +162,8 @@ best_success = df.loc[max_idx, "success_rate"]
 plt.annotate(
     f"최적 비율\n({best_ratio*100:.0f}%, {best_success*100:.2f}%)",
     xy=(best_ratio*100, best_success*100),
-    xytext=(best_ratio*100 + 0, best_success*100 - 3),
+    xytext=(best_ratio*100 + 0, best_success*100 - 20),
+    arrowprops=dict(arrowstyle="->")
 )
 
 plt.tight_layout()
