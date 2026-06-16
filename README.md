@@ -19,7 +19,21 @@
 
 ### 최적 정지 이론 모의 실험
 
-<img src="https://raw.githubusercontent.com/HYB1022/opti_stopping_test/refs/heads/main/help.png" width="400"/>
+<picture>
+  <source
+    media="(prefers-color-scheme: dark)"
+    srcset="https://raw.githubusercontent.com/HYB1022/opti_stopping_test/main/help_dark.png"
+  >
+  <source
+    media="(prefers-color-scheme: light)"
+    srcset="https://raw.githubusercontent.com/HYB1022/opti_stopping_test/main/help_light.png"
+  >
+  <img
+    src="https://raw.githubusercontent.com/HYB1022/opti_stopping_test/main/help_light.png"
+    width="400"
+    alt="도움말"
+  >
+</picture>
 
 [![GitHub Release](https://img.shields.io/github/v/release/HYB1022/opti_stopping_test?include_prereleases&cacheSeconds=300)](https://github.com/HYB1022/opti_stopping_test/releases)
 [<img src="https://img.shields.io/badge/프로젝트 기간-2026.6.9~2026.6.16-fab2ac?style=flat&logo=&logoColor=white" />]()
