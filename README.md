@@ -58,3 +58,7 @@ pip install matplotlib
 pip install pandas
 ```
 3. 릴리즈 탭에 있는 Source code를 저장한 후, main.py를 실행하면 됩니다.
+
+## 🤗 기여자
+- 방현우 (@HYB1022) - 기획, 프롬프트, 깃헙 페이지 제작
+- ChatGPT (@OpenAI) – simulation design, debugging, documentation support
