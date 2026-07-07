@@ -13,7 +13,6 @@ pyinstaller ^
 --onefile ^
 --clean ^
 --collect-all matplotlib ^
---icon=icon.ico ^
 --name OptimalStopping ^
 --upx-dir=upx ^
 main.py

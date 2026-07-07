@@ -1,7 +1,6 @@
 import random
 import csv
 
-import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 
@@ -39,6 +38,9 @@ def run_trial(n=100, ratio=0.37):
 
     observe_count = int(n * ratio)
 
+    if observe_count < 1:
+        observe_count = 1
+
     best_seen = max(candidates[:observe_count])
 
     selected = None
@@ -61,7 +63,10 @@ def simulate(n=100, ratio=0.37, trials=2000):
 
     for _ in range(trials):
 
-        if run_trial(n, ratio):
+        if run_trial(
+            n=n,
+            ratio=ratio
+        ):
             success_count += 1
 
     return success_count / trials
@@ -77,11 +82,34 @@ TRIALS = 2000
 
 results = []
 
+
+# ======================
+# 시작 안내
+# ======================
+
 print("=" * 50)
 print("최적 정지 이론 시뮬레이션")
+print("잠시만 기다려 주십시오...")
+print("초기화 중...")
 print("=" * 50)
+print()
 
-for ratio in RATIOS:
+
+# ======================
+# 시뮬레이션 실행
+# ======================
+
+total_count = len(RATIOS)
+
+for current, ratio in enumerate(
+    RATIOS,
+    start=1
+):
+
+    print(
+        f"[{current}/{total_count}] "
+        f"관찰 비율 {ratio*100:.0f}% 계산 중..."
+    )
 
     success_rate = simulate(
         n=100,
@@ -94,8 +122,7 @@ for ratio in RATIOS:
     )
 
     print(
-        f"관찰 비율 {ratio*100:.0f}% "
-        f"→ 성공률 {success_rate*100:.2f}%"
+        f"    → 성공률 {success_rate*100:.2f}%"
     )
 
 
@@ -113,68 +140,72 @@ with open(
     writer = csv.writer(f)
 
     writer.writerow(
-        ["ratio", "success_rate"]
+        [
+            "ratio",
+            "success_rate"
+        ]
     )
 
     writer.writerows(results)
 
-print("\nresults.csv 저장 완료")
+print()
+print("results.csv 저장 완료")
 
 
 # ======================
-# 데이터프레임
+# 그래프용 리스트 생성
 # ======================
 
-df = pd.DataFrame(
-    results,
-    columns=[
-        "ratio",
-        "success_rate"
-    ]
-)
+ratio_percent = [
+    ratio * 100
+    for ratio, success in results
+]
 
-df["ratio_percent"] = df["ratio"] * 100
-df["success_percent"] = df["success_rate"] * 100
+success_percent = [
+    success * 100
+    for ratio, success in results
+]
 
 
+# ======================
+# 결과 분석
+# ======================
 # ======================
 # 37% 이전 최고
 # ======================
 
-before_df = df[df["ratio"] <= 0.37]
+before_candidates = [
+    item
+    for item in results
+    if item[0] <= 0.37
+]
 
-before_idx = before_df["success_rate"].idxmax()
-
-before_ratio = df.loc[before_idx, "ratio"]
-before_success = df.loc[before_idx, "success_rate"]
+before_ratio, before_success = max(
+    before_candidates,
+    key=lambda x: x[1]
+)
 
 
 # ======================
 # 최종 결정
 # ======================
 
-after_df = df[df["ratio"] > 0.37]
+after_candidates = [
+    item
+    for item in results
+    if item[0] > 0.37
+]
 
-final_idx = None
+final_ratio = before_ratio
+final_success = before_success
 
-for idx in after_df.index:
+for ratio, success in after_candidates:
 
-    if df.loc[idx, "success_rate"] > before_success:
-        final_idx = idx
+    if success > before_success:
+
+        final_ratio = ratio
+        final_success = success
         break
-
-# 끝까지 못 넘으면
-# 37% 이전 최고를 그대로 최종 결정
-
-if final_idx is None:
-
-    final_ratio = before_ratio
-    final_success = before_success
-
-else:
-
-    final_ratio = df.loc[final_idx, "ratio"]
-    final_success = df.loc[final_idx, "success_rate"]
 
 
 # ======================
@@ -189,12 +220,13 @@ plt.rcParams["legend.fontsize"] = 11
 plt.figure(figsize=(10, 6))
 
 plt.plot(
-    df["ratio_percent"],
-    df["success_percent"],
+    ratio_percent,
+    success_percent,
     linewidth=2
 )
 
 # 37% 기준선
+
 plt.axvline(
     x=37,
     linestyle="--",
@@ -297,7 +329,7 @@ plt.title(
     "최적 정지 이론(37% 법칙) 시뮬레이션"
 )
 
-# 제목과 주석이 안 겹치게 위쪽 여백 확보
+# 제목과 주석 여백 확보
 plt.subplots_adjust(top=0.88)
 
 plt.grid(True)
@@ -314,7 +346,8 @@ plt.savefig(
 
 plt.show()
 
-print("\n그래프 저장 완료")
+print()
+print("그래프 저장 완료")
 
 print(
     f"\n37% 이전 최고 : "
