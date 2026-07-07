@@ -138,16 +138,6 @@ df["success_percent"] = df["success_rate"] * 100
 
 
 # ======================
-# 전체 최고점
-# ======================
-
-max_idx = df["success_rate"].idxmax()
-
-best_ratio = df.loc[max_idx, "ratio"]
-best_success = df.loc[max_idx, "success_rate"]
-
-
-# ======================
 # 37% 이전 최고
 # ======================
 
@@ -160,22 +150,43 @@ before_success = df.loc[before_idx, "success_rate"]
 
 
 # ======================
-# 37% 이후 최고
+# 최종 결정
 # ======================
 
 after_df = df[df["ratio"] > 0.37]
 
-after_idx = after_df["success_rate"].idxmax()
+final_idx = None
 
-after_ratio = df.loc[after_idx, "ratio"]
-after_success = df.loc[after_idx, "success_rate"]
+for idx in after_df.index:
+
+    if df.loc[idx, "success_rate"] > before_success:
+        final_idx = idx
+        break
+
+# 끝까지 못 넘으면
+# 37% 이전 최고를 그대로 최종 결정
+
+if final_idx is None:
+
+    final_ratio = before_ratio
+    final_success = before_success
+
+else:
+
+    final_ratio = df.loc[final_idx, "ratio"]
+    final_success = df.loc[final_idx, "success_rate"]
 
 
 # ======================
 # 그래프
 # ======================
 
-plt.figure(figsize=(12, 7))
+plt.rcParams["font.size"] = 12
+plt.rcParams["axes.titlesize"] = 16
+plt.rcParams["axes.labelsize"] = 13
+plt.rcParams["legend.fontsize"] = 11
+
+plt.figure(figsize=(10, 6))
 
 plt.plot(
     df["ratio_percent"],
@@ -198,58 +209,86 @@ plt.axvline(
 plt.scatter(
     before_ratio * 100,
     before_success * 100,
-    s=120
+    s=120,
+    zorder=5
 )
 
 plt.annotate(
-    f"37% 이전 최고\n({before_ratio*100:.0f}%, {before_success*100:.2f}%)",
     (
+        f"37% 이전 최고\n"
+        f"({before_ratio*100:.0f}%, "
+        f"{before_success*100:.2f}%)"
+    ),
+    xy=(
         before_ratio * 100,
         before_success * 100
+    ),
+    xytext=(-100, -60),
+    textcoords="offset points",
+    arrowprops=dict(
+        arrowstyle="->"
+    ),
+    bbox=dict(
+        boxstyle="round,pad=0.3",
+        alpha=0.85
     )
 )
 
 # ----------------------
-# 37% 이후 최고
+# 최종 결정
 # ----------------------
 
-if after_idx != before_idx:
+if final_ratio != before_ratio:
 
     plt.scatter(
-        after_ratio * 100,
-        after_success * 100,
-        s=120
+        final_ratio * 100,
+        final_success * 100,
+        s=120,
+        zorder=5
     )
 
     plt.annotate(
-        f"37% 이후 최고\n({after_ratio*100:.0f}%, {after_success*100:.2f}%)",
         (
-            after_ratio * 100,
-            after_success * 100
+            f"최종 결정\n"
+            f"({final_ratio*100:.0f}%, "
+            f"{final_success*100:.2f}%)"
+        ),
+        xy=(
+            final_ratio * 100,
+            final_success * 100
+        ),
+        xytext=(50, -40),
+        textcoords="offset points",
+        arrowprops=dict(
+            arrowstyle="->"
+        ),
+        bbox=dict(
+            boxstyle="round,pad=0.3",
+            alpha=0.85
         )
     )
 
-# ----------------------
-# 전체 최고
-# ----------------------
-
-if max_idx not in [before_idx, after_idx]:
-
-    plt.scatter(
-        best_ratio * 100,
-        best_success * 100,
-        s=150
-    )
+else:
 
     plt.annotate(
-        f"전체 최고\n({best_ratio*100:.0f}%, {best_success*100:.2f}%)",
         (
-            best_ratio * 100,
-            best_success * 100
+            "최종 결정\n"
+            "(37% 이전 최고 유지)"
+        ),
+        xy=(
+            before_ratio * 100,
+            before_success * 100
+        ),
+        xytext=(40, 40),
+        textcoords="offset points",
+        arrowprops=dict(
+            arrowstyle="->"
+        ),
+        bbox=dict(
+            boxstyle="round,pad=0.3",
+            alpha=0.85
         )
     )
-
-# ----------------------
 
 plt.xlabel("관찰 비율 (%)")
 plt.ylabel("성공률 (%)")
@@ -257,6 +296,9 @@ plt.ylabel("성공률 (%)")
 plt.title(
     "최적 정지 이론(37% 법칙) 시뮬레이션"
 )
+
+# 제목과 주석이 안 겹치게 위쪽 여백 확보
+plt.subplots_adjust(top=0.88)
 
 plt.grid(True)
 
@@ -266,20 +308,22 @@ plt.tight_layout()
 
 plt.savefig(
     "optimal_stopping_graph.png",
-    dpi=300
+    dpi=600,
+    bbox_inches="tight"
 )
 
 plt.show()
 
-
 print("\n그래프 저장 완료")
 
 print(
-    f"\n전체 최고 성공률 : "
-    f"{best_success*100:.2f}%"
+    f"\n37% 이전 최고 : "
+    f"{before_ratio*100:.0f}% "
+    f"({before_success*100:.2f}%)"
 )
 
 print(
-    f"최적 관찰 비율 : "
-    f"{best_ratio*100:.0f}%"
+    f"최종 결정 : "
+    f"{final_ratio*100:.0f}% "
+    f"({final_success*100:.2f}%)"
 )
