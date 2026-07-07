@@ -153,24 +153,6 @@ print("results.csv 저장 완료")
 
 
 # ======================
-# 그래프용 리스트 생성
-# ======================
-
-ratio_percent = [
-    ratio * 100
-    for ratio, success in results
-]
-
-success_percent = [
-    success * 100
-    for ratio, success in results
-]
-
-
-# ======================
-# 결과 분석
-# ======================
-# ======================
 # 37% 이전 최고
 # ======================
 
@@ -196,6 +178,8 @@ after_candidates = [
     if item[0] > 0.37
 ]
 
+graph_stop_ratio = 0.99
+
 final_ratio = before_ratio
 final_success = before_success
 
@@ -205,9 +189,31 @@ for ratio, success in after_candidates:
 
         final_ratio = ratio
         final_success = success
+
+        graph_stop_ratio = ratio
+
         break
 
 
+# ======================
+# 그래프용 데이터
+# ======================
+
+display_ratio = []
+display_success = []
+
+for ratio, success in results:
+
+    display_ratio.append(
+        ratio * 100
+    )
+
+    display_success.append(
+        success * 100
+    )
+
+    if ratio == graph_stop_ratio:
+        break
 # ======================
 # 그래프
 # ======================
@@ -220,8 +226,8 @@ plt.rcParams["legend.fontsize"] = 11
 plt.figure(figsize=(10, 6))
 
 plt.plot(
-    ratio_percent,
-    success_percent,
+    display_ratio,
+    display_success,
     linewidth=2
 )
 
@@ -322,6 +328,16 @@ else:
         )
     )
 
+# 그래프가 최종 결정 지점까지만 보이도록
+
+plt.xlim(
+    0,
+    max(
+        40,
+        graph_stop_ratio * 100 + 5
+    )
+)
+
 plt.xlabel("관찰 비율 (%)")
 plt.ylabel("성공률 (%)")
 
@@ -329,8 +345,9 @@ plt.title(
     "최적 정지 이론(37% 법칙) 시뮬레이션"
 )
 
-# 제목과 주석 여백 확보
-plt.subplots_adjust(top=0.88)
+plt.subplots_adjust(
+    top=0.88
+)
 
 plt.grid(True)
 
@@ -360,3 +377,6 @@ print(
     f"{final_ratio*100:.0f}% "
     f"({final_success*100:.2f}%)"
 )
+
+print()
+print("프로그램 종료")
